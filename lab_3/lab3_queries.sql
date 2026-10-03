@@ -1,6 +1,5 @@
 -- Задание 1
-SELECT p.id, p.title AS "Наименование", c.name AS "Категория",
-    s.store_name AS "Продавец", p.price AS "Цена"
+SELECT p.id, p.title AS "Наименование", c.name AS "Категория", s.store_name AS "Продавец", p.price AS "Цена"
 FROM products AS p
 JOIN categories AS c ON c.id = p.category_id
 JOIN sellers AS s ON s.id = p.seller_id;
@@ -14,8 +13,7 @@ WHERE r.id IS NULL;
 
 
 -- Задание 3
-SELECT c.name, COUNT(p.id) AS "Количество",
-    ROUND(AVG(p.price), 2) AS "Средняя цена"
+SELECT c.name, COUNT(p.id) AS "Количество", ROUND(AVG(p.price), 2) AS "Средняя цена"
 FROM products AS p
 JOIN categories AS c ON c.id = p.category_id
 WHERE p.is_active
@@ -23,8 +21,7 @@ GROUP BY c.name;
 
 
 -- Задание 4
-SELECT s.store_name AS "Продавец",
-    SUM(o.quantity * o.unit_price) AS "Выручка"
+SELECT s.store_name AS "Продавец", SUM(o.quantity * o.unit_price) AS "Выручка"
 FROM products AS p
 JOIN sellers AS s ON s.id = p.seller_id
 JOIN order_items AS o ON o.product_id = p.id
@@ -44,8 +41,7 @@ FROM products
 WHERE seller_id IN (
     SELECT DISTINCT p.seller_id
     FROM products AS p
-    JOIN order_items AS o ON o.product_id = p.id
-);
+    JOIN order_items AS o ON o.product_id = p.id);
 
 
 SELECT s.id, s.store_name
@@ -65,8 +61,7 @@ WITH seller_revenue AS (
     JOIN order_items AS o ON o.product_id = p.id
     GROUP BY p.seller_id
 )
-SELECT s.store_name AS "Продавец",
-    sr.revenue AS "Выручка"
+SELECT s.store_name AS "Продавец", sr.revenue AS "Выручка"
 FROM seller_revenue AS sr
 JOIN sellers AS s ON s.id = sr.seller_id
 ORDER BY sr.revenue DESC;
@@ -122,8 +117,6 @@ JOIN products AS p ON p.seller_id = s.id
 JOIN order_items AS o ON o.product_id = p.id
 GROUP BY s.id, s.store_name;
 
-
 SELECT * FROM product_catalog LIMIT 2;
-
 
 SELECT * FROM seller_revenue ORDER BY "Выручка" DESC LIMIT 3;
